@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.mybatis.example.mapper.UserMapper">
+    <sql id="selcetor">
+          select * from user
+    </sql>
+<!--     <sql id="BaseResuleMap">-->
+    <resultMap id="BaseResultMap" type="org.mybatis.example.pojo.User">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="username" property="username" jdbcType="VARCHAR" />
+        <result column="birthday" property="birthday" jdbcType="DATE" />
+        <result column="sex" property="sex" jdbcType="CHAR" />
+        <result column="address" property="address" jdbcType="VARCHAR" />
+    </resultMap>
+    <!--有关联查询时，即使 column 和 property 名一样也要写-->
+    <resultMap id="geitOrdersMap" type="org.mybatis.example.pojo.Orders">
+        <id column="id" property="id"/>
+        <result column="user_id" property="userId"/>
+        <result column="number" property="number"/>
+       <!-- 注意，这里没column-->
+        <association property="user" javaType="org.mybatis.example.pojo.User">
+<!--        <result property="id" column="uid"/>-->
+            <id property="id" column="uid"/>
+            <result property="username" column="username"/>
+        </association>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, username, birthday, sex
+    </sql>
+    <!--查询-->
+    <select id="findUserById" resultType="org.mybatis.example.pojo.User">
+        select * from user where id = #{id}
+    </select>
+<!--    <select id="findUserByUsername" parameterType="String" resultType="org.mybatis.example.pojo.User">-->
+<!--        select * from user where like username like "%"#{name}"%"-->
+<!--    </select>-->
+    <!--查询-返回list-->
+    <select id="findUserByUsername" parameterType="String" resultType="org.mybatis.example.pojo.User">
+		select * from user where username like "%"#{haha}"%"
+	</select>
+    <!--查询-返回list-查询参数是自定义包装类-->
+    <select id="findUserByQueryVo" parameterType="org.mybatis.example.pojo.QueryVo" resultType="org.mybatis.example.pojo.User">
+		select * from user where username like "%"#{user.username}"%"
+	</select>
+    <!--查询-条件查询-->
+    <select id="findUserByWhere" parameterType="org.mybatis.example.pojo.User" resultType="org.mybatis.example.pojo.User">
+        <include refid="selcetor"></include>
+        <where>
+            <if test="username != null and  username != '' ">
+                and username like "%" #{username} "%"
+            </if><if test="sex != null and  sex != '' ">
+                and sex =  #{sex}
+            </if>
+        </where>
+    </select>
+    <!--查询-foreach -->
+   <!--collection 为传入参入里的对象 item为 该对象里的每个值的指代-->
+    <select id="findUserByQueryVo2" parameterType="org.mybatis.example.pojo.QueryVo" resultType="org.mybatis.example.pojo.User">
+        <include refid="selcetor"></include>
+        <where>
+            id in
+            <foreach collection="ids" item="id" open="(" close=")" separator=",">
+                #{id}
+            </foreach>
+        </where>
+    </select>
+    <!--查询 -->
+    <select id="selectUserById" parameterType="java.lang.Integer" resultType="org.mybatis.example.pojo.User">
+        select
+        <include refid="Base_Column_List"></include>
+        from user
+        where id = #{id}
+    </select>
+    <!--查询  一对一查询 以订单为中心 resultMap-->
+<!--    注意 o.id和 u.id重名 ，要 改名，否则只认一个id -->
+    <select id="findOrders"  resultMap="geitOrdersMap">
+        SELECT
+            o.id,
+            o.user_id,
+            o.number,
+            u.id as uid,
+            u.username
+        FROM
+            `orders` o
+            LEFT JOIN `user` u ON o.user_id = u.id
+    </select>
+    <resultMap id="userMap" type="org.mybatis.example.pojo.User">
+        <id property="id" column="id"/>
+        <result property="username" column="username"/>
+        <collection property="orders" ofType="org.mybatis.example.pojo.Orders">
+            <result property="id" column="oid"/>
+            <result property="userId" column="user_id"/>
+        </collection>
+    </resultMap>
+    <select id="findUserWithOrders" resultMap="userMap">
+        select u.id,u.username,o.id as oid,o.user_id
+        from  `user` u left join `orders` o
+        on u.id = o.user_id
+    </select>
+    <!-- 添加用户 -->
+    <insert id="inserUser" parameterType="org.mybatis.example.pojo.User">
+        insert into user (username,birthday,address,sex)
+		values (#{username},#{birthday},#{address},#{sex})
+    </insert>
+    <update id="updataUserById" parameterType="org.mybatis.example.pojo.User">
+        update user
+        set username = #{username} ,sex = #{sex},birthday = #{birthday},address = #{address}
+        where id = #{id}
+    </update>
+</mapper>
