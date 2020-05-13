@@ -9,9 +9,11 @@ public class QueryVo {
     public Integer[] getIds() {
         return ids;
     }
+
     public void setIds(Integer[] ids) {
         this.ids = ids;
     }
+
     public User getUser() {
         return user;
     }

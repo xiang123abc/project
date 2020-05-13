@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
-    
+
 </head>
 <body>
 <!--v-bind 声明式渲染-->
@@ -21,7 +21,7 @@
         </li>
     </ol>
     <!-- // {{this is message error}} -->
-    <p>{{message}}</p>  
+    <p>{{message}}</p>
     <button v-on:click="reverseMessage">反转消息</button>
     <!-- v-model 指令，它能轻松实现表单输入和应用状态之间的双向绑定。 -->
     <input v-model="message">
@@ -37,63 +37,63 @@
       作详细解释。
       -->
         <todo-item
-        v-for="item in groceryList"
-        v-bind:todo="item"
-        v-bind:key="item.id"
+                v-for="item in groceryList"
+                v-bind:todo="item"
+                v-bind:key="item.id"
         >
         </todo-item>
-      </ol>
+    </ol>
 </div>
 
 <!-- 模板语法 -->
 <!-- 插值  -->
-    <!-- #文本 数据绑定最常见的形式就是使用“Mustache”语法 (双大括号) 的文本插值： -->
-    <span>Message: {{ msg }}</span>
-    <!-- #原始 HTML -->
-    <!-- 双大括号会将数据解释为普通文本，而非 HTML 代码。为了输出真正的 HTML，你需要使用 v-html -->
-    <p>Using mustaches: {{ rawHtml }}</p>
-    <p>Using v-html directive: <span v-html="rawHtml"></span></p>
-    <!-- #Attribute -->
-    Mustache 语法不能作用在 HTML attribute 上，遇到这种情况应该使用 v-bind 指令：
-    <div v-bind:id="dynamicId"></div>
-     <!-- 对于布尔 attribute (它们只要存在就意味着值为 true)，v-bind 工作起来略有不同，在这个例子中： -->
-    <button v-bind:disabled="isButtonDisabled">Button</button>
-    <!-- #使用 JavaScript 表达式 -->
-    {{ message.split('').reverse().join('') }}
-    <div v-bind:id="'list-' + id"></div>
-    <!-- 这是语句，不是表达式 -->
-    <!-- {{ var a = 1 }} -->
-    <!-- 模板表达式都被放在沙盒中，只能访问全局变量的一个白名单，如 Math 和 Date 。你不应该在模板表达式中试图访问用户定义的全局变量。 -->
+<!-- #文本 数据绑定最常见的形式就是使用“Mustache”语法 (双大括号) 的文本插值： -->
+<span>Message: {{ msg }}</span>
+<!-- #原始 HTML -->
+<!-- 双大括号会将数据解释为普通文本，而非 HTML 代码。为了输出真正的 HTML，你需要使用 v-html -->
+<p>Using mustaches: {{ rawHtml }}</p>
+<p>Using v-html directive: <span v-html="rawHtml"></span></p>
+<!-- #Attribute -->
+Mustache 语法不能作用在 HTML attribute 上，遇到这种情况应该使用 v-bind 指令：
+<div v-bind:id="dynamicId"></div>
+<!-- 对于布尔 attribute (它们只要存在就意味着值为 true)，v-bind 工作起来略有不同，在这个例子中： -->
+<button v-bind:disabled="isButtonDisabled">Button</button>
+<!-- #使用 JavaScript 表达式 -->
+{{ message.split('').reverse().join('') }}
+<div v-bind:id="'list-' + id"></div>
+<!-- 这是语句，不是表达式 -->
+<!-- {{ var a = 1 }} -->
+<!-- 模板表达式都被放在沙盒中，只能访问全局变量的一个白名单，如 Math 和 Date 。你不应该在模板表达式中试图访问用户定义的全局变量。 -->
 <!-- 指令 -->
-    <!-- 指令 (Directives) 是带有 v- 前缀的特殊 attribute,指令 attribute 的值预期是单个 JavaScript
-     表达式 (v-for 是例外情况)。指令的职责是，当表达式的值改变时，将其产生的连带影响，响应式地作用于 DOM -->
-     <!-- #参数 -->
-     一些指令能够接收一个“参数”，在指令名称之后以冒号表示
-     <a v-bind:href="url">...</a> 
-      在这里 href 是参数，告知 v-bind 指令将该元素的 href attribute 与表达式url 的值绑定。
-       <!-- # 动态参数 -->
-       <a v-bind:[attributeName]="url"> ... </a>
-       这里的 attributeName 会被作为一个 JavaScript 表达式进行动态求值
-       约束： 动态参数表达式有一些语法约束，因为某些字符，如空格和引号，放在 HTML attribute 名里是无效的。例如：
-       <!-- # 修饰符 -->
-       <!-- 缩写 -->
-       v-bind 缩写
-        <!-- 完整语法 -->
-        <a v-bind:href="url">...</a>
-        <!-- 缩写 -->
-        <a :href="url">...</a>
-        v-on 缩写
-        <!-- 完整语法 -->
-        <a v-on:click="doSomething">...</a>
-        <!-- 缩写 -->
-        <a @click="doSomething">...</a>
-        <!-- 动态参数的缩写 (2.6.0+) -->
-        <a @[event]="doSomething"> ... </a>
-        <!-- 动态参数的缩写 (2.6.0+) -->
+<!-- 指令 (Directives) 是带有 v- 前缀的特殊 attribute,指令 attribute 的值预期是单个 JavaScript
+ 表达式 (v-for 是例外情况)。指令的职责是，当表达式的值改变时，将其产生的连带影响，响应式地作用于 DOM -->
+<!-- #参数 -->
+一些指令能够接收一个“参数”，在指令名称之后以冒号表示
+<a v-bind:href="url">...</a>
+在这里 href 是参数，告知 v-bind 指令将该元素的 href attribute 与表达式url 的值绑定。
+<!-- # 动态参数 -->
+<a v-bind:[attributeName]="url"> ... </a>
+这里的 attributeName 会被作为一个 JavaScript 表达式进行动态求值
+约束： 动态参数表达式有一些语法约束，因为某些字符，如空格和引号，放在 HTML attribute 名里是无效的。例如：
+<!-- # 修饰符 -->
+<!-- 缩写 -->
+v-bind 缩写
+<!-- 完整语法 -->
+<a v-bind:href="url">...</a>
+<!-- 缩写 -->
+<a :href="url">...</a>
+v-on 缩写
+<!-- 完整语法 -->
+<a v-on:click="doSomething">...</a>
+<!-- 缩写 -->
+<a @click="doSomething">...</a>
+<!-- 动态参数的缩写 (2.6.0+) -->
+<a @[event]="doSomething"> ... </a>
+<!-- 动态参数的缩写 (2.6.0+) -->
 <!-- 计算属性和侦听器 -->
-    <!-- 计算属性 -->
+<!-- 计算属性 -->
 <a :[key]="url"> ... </a>
-       
+
 <!--自己的文件js放最下-->
 <script src="/index.js"></script>
 </body>

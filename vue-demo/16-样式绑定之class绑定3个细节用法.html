@@ -1,36 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Document</title>
-  <style type="text/css">
-    .active {
-      border: 1px solid red;
-      width: 100px;
-      height: 100px;
-    }
-    .error {
-      background-color: orange;
-    }
-    .test {
-      color: blue;
-    }
-    .base {
-      font-size: 28px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style type="text/css">
+        .active {
+            border: 1px solid red;
+            width: 100px;
+            height: 100px;
+        }
+
+        .error {
+            background-color: orange;
+        }
+
+        .test {
+            color: blue;
+        }
+
+        .base {
+            font-size: 28px;
+        }
+    </style>
 </head>
 <body>
-  <div id="app">
+<div id="app">
     <div v-bind:class='[activeClass, errorClass, {test: isTest}]'>测试样式</div>
     <div v-bind:class='arrClasses'>d2</div>
     <div v-bind:class='objClasses'>d3</div>
     <div class="base" v-bind:class='objClasses'>d4</div>
 
     <button v-on:click='handle'>切换</button>
-  </div>
-  <script type="text/javascript" src="js/vue.js"></script>
-  <script type="text/javascript">
+</div>
+<script type="text/javascript" src="js/vue.js"></script>
+<script type="text/javascript">
     /*
       样式绑定相关语法细节：
       1、对象绑定和数组绑定可以结合使用
@@ -39,24 +42,24 @@
       
     */
     var vm = new Vue({
-      el: '#app',
-      data: {
-        activeClass: 'active',
-        errorClass: 'error',
-        isTest: true,
-        arrClasses: ['active','error'],
-        objClasses: {
-          active: true,
-          error: true
+        el: '#app',
+        data: {
+            activeClass: 'active',
+            errorClass: 'error',
+            isTest: true,
+            arrClasses: ['active', 'error'],
+            objClasses: {
+                active: true,
+                error: true
+            }
+        },
+        methods: {
+            handle: function () {
+                // this.isTest = false;
+                this.objClasses.error = false;
+            }
         }
-      },
-      methods: {
-        handle: function(){
-          // this.isTest = false;
-          this.objClasses.error = false;
-        }
-      }
     });
-  </script>
+</script>
 </body>
 </html>

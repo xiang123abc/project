@@ -7,25 +7,25 @@
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
 </head>
 <body>
-    <div id="app">
-        <div v-text='msg'></div>
-        <div>
-            <input type="text" v-model='msg'>
-          </div>
-    </div> 
+<div id="app">
+    <div v-text='msg'></div>
+    <div>
+        <input type="text" v-model='msg'>
+    </div>
+</div>
 
-    <script type="text/javascript">
+<script type="text/javascript">
     /*
         双向数据绑定
         1、从页面到数据
         2、从数据到页面
       */
-        var app = new Vue({
-            el:'#app',
-            data:{
-                msg:'hello'
-            }
-        })
-    </script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            msg: 'hello'
+        }
+    })
+</script>
 </body>
 </html>
